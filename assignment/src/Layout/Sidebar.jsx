@@ -1,7 +1,9 @@
 import { MessagesSquareIcon, MoreVertical, Plus } from "lucide-react";
 import React from "react";
 
-const Sidebar = () => {
+const Sidebar = ({onAdd}) => {
+
+  
   return (
     <div className="w-52 ml-4 ">
       <div className="flex gap-3">
@@ -15,7 +17,7 @@ const Sidebar = () => {
       </div>
       <div className="flex justify-between items-center mt-2">
             <h1 className="font-bold">DFIN</h1>
-            <div className="flex gap-2"><Plus size={16} className="cursor-pointer"/> <MessagesSquareIcon size={16} className="cursor-pointer"/> </div>
+            <div className="flex gap-2" onClick={() => onAdd(null)}><Plus size={16} className="cursor-pointer"/> <MessagesSquareIcon size={16} className="cursor-pointer"/> </div>
       </div>
     </div>
   );

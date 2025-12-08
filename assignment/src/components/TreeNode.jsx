@@ -1,33 +1,46 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, DockIcon, File, Minus, Plus, Trash2Icon } from "lucide-react";
 import React, { useState } from "react";
 
-const TreeNode = ({ node }) => {
+const TreeNode = ({ node, onAdd , onAddFile}) => {
   const [open, setOpen] = useState(false);
 
-  const hasChildren = node.nodes && node.nodes.length > 0;
+  
+
+  const hasChildren = node.children && node.children.length > 0;
 
   return (
     <div className="ml-4">
       <div
         className="cursor-pointer flex items-center space-x-2"
-        onClick={() => setOpen(!open)}
+         
       >
         
-        {hasChildren && (
-          <span className={`${open ? "rotate-90" : ""} transition-transform`}>
-            <ArrowRight size={10}/>
+        {node.isFolder && (
+          <span className={`${open ? "rotate-90" : ""} transition-transform`} onClick={() => setOpen(!open)}>
+            {
+              node.isFolder ? <ArrowRight size={10}/> : ""
+            }
           </span>
         )}
 
        
         <span>{node.name}</span>
+        {
+          node.isFolder && (
+            <>
+                <span onClick={() => onAdd(node.id)}><Plus size={16}/></span>
+                <span onClick={() => onAddFile(node.id)}><File size={16}/></span>
+            </>
+          )
+        }
+        <span><Trash2Icon size={16}/></span>
       </div>
 
       
       {open && hasChildren && (
         <div className="ml-4">
-          {node.nodes.map((child, index) => (
-            <TreeNode key={index} node={child} />
+          {node.children.map((child, index) => (
+            <TreeNode key={index} node={child} onAdd={onAdd} onAddFile={onAddFile}/>
           ))}
         </div>
       )}

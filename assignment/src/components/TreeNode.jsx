@@ -9,12 +9,10 @@ const TreeNode = ({ node, onAdd , onAddFile, onDelete}) => {
   const hasChildren = node.children && node.children.length > 0;
 
   return (
-    <div className="ml-4 border border-r-amber-300">
+    <div className="ml-4">
       <div
         className="cursor-pointer flex items-center space-x-2"
-         
       >
-        
         {node.isFolder && (
           <span className={`${open ? "rotate-90" : ""} transition-transform`} onClick={() => setOpen(!open)}>
             {

@@ -3,6 +3,7 @@ import Header from "./Layout/Header";
 import Sidebar from "./Layout/Sidebar";
 import TreeNode from "./components/TreeNode";
 import UserMenu from "./components/UserMenu";
+import Editor from "./Layout/Editor";
 
 const App = () => {
   // const children = [
@@ -112,20 +113,19 @@ const App = () => {
   };
 
   const deleteNodeFromTree = (tree, nodeId) => {
-  return tree
-    .filter(node => node.id !== nodeId) 
-    .map(node => ({
-      ...node,
-      children: node.children
-        ? deleteNodeFromTree(node.children, nodeId)
-        : node.children
-    }));
-};
+    return tree
+      .filter((node) => node.id !== nodeId)
+      .map((node) => ({
+        ...node,
+        children: node.children
+          ? deleteNodeFromTree(node.children, nodeId)
+          : node.children,
+      }));
+  };
 
-
-const handleDelete = (id) => {
-  setData(prev => deleteNodeFromTree(prev, id));
-};
+  const handleDelete = (id) => {
+    setData((prev) => deleteNodeFromTree(prev, id));
+  };
 
   useEffect(() => {
     localStorage.setItem("folderTree", JSON.stringify(data));
@@ -134,19 +134,11 @@ const handleDelete = (id) => {
   return (
     <>
       <Header />
-      <Sidebar onAdd={handleAddFolder} />
-      <div className="p-5">
-        {data.map((node, index) => (
-          <TreeNode
-            key={index}
-            node={node}
-            onAdd={handleAddFolder}
-            onAddFile={handleAddFile}
-            onDelete={handleDelete}
-          />
-        ))}
+      <div className="flex">
+        <Sidebar onAdd={handleAddFolder} data={data} onAddFile={handleAddFile} onDelete={handleDelete} />
+        <Editor /> 
       </div>
-      <UserMenu />
+      
     </>
   );
 };
